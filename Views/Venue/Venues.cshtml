@@ -1,0 +1,81 @@
+﻿@model xyngr.Models.BusinessListingForFrontViewModel
+@{
+    ViewBag.Title = Model.Category.CategoryName;
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header {
+    @if (!Model.Category.MetaAuthorContent.Equals(string.Empty))
+    {
+        <meta name="Author" content="@Model.Category.MetaAuthorContent" />
+    }
+    @if (!Model.Category.MetaDescContent.Equals(string.Empty))
+    {
+        <meta name="Description" content="@Model.Category.MetaDescContent" />
+    }
+    @if (!Model.Category.MetaKeyWordContent.Equals(string.Empty))
+    {
+        <meta name="Keywords" content="@Model.Category.MetaKeyWordContent" />
+    }
+
+    @*// Open Graph*@
+    <meta content="@Model.Category.ImageURL" property="og:image" />
+    <meta content="Website" property="og:type" />
+    <meta content="www.xyngr.com" property="og:site_name" />
+    <meta content="@Model.Category.CategoryName" property="og:title" />
+    <meta content="@Model.Category.CategoryName" property="og:description" />
+    <meta content="@Request.Url" property="og:url" />
+
+    @*// Twitter*@
+    <meta name='twitter:card' content="Destination" />
+    <meta name='twitter:site' content="www.xyngr.com" />
+    <meta name='twitter:title' content="@Model.Category.CategoryName" />
+    <meta name='twitter:description' content="@Model.Category.CategoryName" />
+    <meta name='twitter:image' content="@Model.Category.ImageURL" />
+
+    @*// Canonical*@
+    <link href="@Request.Url" rel="canonical" />
+}
+<section>
+    <div class="rows inner_banner" style="background: url('@Model.Category.ImageURL') no-repeat center center;background-size: cover;">
+        <div class="container">
+            <h2></h2>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+                <li>@ViewBag.Title</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!--====== PLACES ==========-->
+<section>
+    <div class="rows inn-page-bg com-colo">
+        <div class="container inn-page-con-bg tb-space pad-bot-redu" id="inner-page-title">
+            <!-- TITLE & DESCRIPTION -->
+            <div class="spe-title col-md-12">
+                <h2><span>@ViewBag.Title</span></h2>
+                <div class="title-line">
+                    <div class="tl-1"></div>
+                    <div class="tl-2"></div>
+                    <div class="tl-3"></div>
+                </div>
+                @*<p>World's leading tour and travels Booking website,Over 30,000 packages worldwide. Book travel packages and enjoy your holidays with distinctive experience</p>*@
+            </div>
+            <div>
+                @foreach (var item in Model.BsinessList)
+                {
+                    <!--====== PACKAGE ==========-->
+                    <div class="col-md-4 col-sm-6 col-xs-12 b_packages">
+                        <div class="v_place_img"><img src="@item.ImageURL" alt="@item.Name" title="@item.Name" style="width:350px;height:220px;" /> </div>
+                        <div class="b_pack rows">
+                            <div class="col-md-8 col-sm-8" style="width:100%">
+                                <h4><a href="/Destination/@Xyngr.helper.CommonLogic.RemoveSpecialCharacter(item.Name)-@item.BusinessID">@item.Name<span class="v_pl_name">(@item.Category)</span></a></h4>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

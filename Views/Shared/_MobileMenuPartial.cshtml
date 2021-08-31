@@ -1,0 +1,31 @@
+﻿@model IEnumerable<xyngr.Models.CategoryViewModel>
+
+<!-- MOBILE MENU -->
+<section>
+    <div class="ed-mob-menu">
+        <div class="ed-mob-menu-con">
+            <div class="ed-mm-left">
+                <div class="wed-logo">
+                    <a href="/"></a>
+                </div>
+            </div>
+            <div class="ed-mm-right">
+                <div class="ed-mm-menu">
+                    <a href="#!" class="ed-micon"><i class="fa fa-bars"></i></a>
+                    <div class="ed-mm-inn">
+                        <a href="#!" class="ed-mi-close"><i class="fa fa-times"></i></a>
+                        <ul>
+                            <li><a href="/Home">Home</a></li>
+                            @foreach (var item in Model)
+                            {
+                                <li>
+                                    <a href="/Venue/@item.CategoryName.Replace(" ","").Replace("-","").Replace("&","and")-@item.CategoryID">@item.CategoryName.Replace(" and ", " & ") </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

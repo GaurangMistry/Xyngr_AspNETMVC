@@ -1,0 +1,98 @@
+﻿@model  xyngr.Models.GeneralSettingsViewModel
+<section>
+    <div class="rows">
+        <div class="footer">
+            <div class="container">
+                <div class="foot-sec2">
+                    <div>
+                        <div class="row">
+                            @*<div class="col-sm-3 foot-spec foot-com">
+                                    <h4><span>Xyngr.com</span></h4>
+                                    <p>food - fashion - entertainment</p>
+                                </div>*@
+                            <div class="col-sm-4 foot-spec foot-com">
+                                <h4><span>Address</span> & Contact Info</h4>
+                                <p>@Model.Address</p>
+                                <p> <span class="strong">Phone: </span> <span class="highlighted">@Model.SupportPhone</span> </p>
+                                <p> <span class="strong">Email: </span> <span class="highlighted">@Model.SupportEmail</span> </p>
+                            </div>
+                            <div class="col-sm-4 col-md-4 foot-spec foot-com">
+                                <h4><span>SUPPORT</span> & HELP</h4>
+                                <ul class="two-columns">
+                                    <li> <a href="/AboutUs">About Us</a> </li>
+                                    <li> <a href="/ContactUs">Contact Us</a> </li>
+                                    <li> <a href="/PrivacyPolicy">Privacy Policy</a> </li>
+                                    <li> <a href="/TermsConditions">Terms Conditions</a> </li>
+
+                                    @*<li> <a href="#">FAQ</a> </li>
+                                        <li> <a href="#">Feedbacks</a> </li>
+                                        <li> <a href="#">Blog </a> </li>
+                                        <li> <a href="#">Use Cases</a> </li>
+                                        <li> <a href="#">Advertise us</a> </li>
+                                        <li> <a href="#">Discount</a> </li>
+                                        <li> <a href="#">Vacations</a> </li>
+                                        <li> <a href="#">Branding Offers </a> </li>*@
+                                </ul>
+                            </div>
+                            <div class="col-sm-4 foot-social foot-spec foot-com">
+                                <h4><span>Follow</span> with us</h4>
+                                <p>Join thousands of other souls</p>
+                                <ul>
+                                    @if (!Model.FBLink.Equals(string.Empty))
+                                    {
+                                        <li>
+                                            <a href="@Model.FBLink" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                        </li>
+                                    }
+
+                                    @if (!Model.InstagramLink.Equals(string.Empty))
+                                    {
+                                        <li>
+                                            <a href="@Model.InstagramLink" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                        </li>
+                                    }
+
+                                    @if (!Model.TwitterLink.Equals(string.Empty))
+                                    {
+                                        <li>
+                                            <a href="@Model.TwitterLink" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                        </li>
+                                    }
+
+                                    @if (!Model.GPlusLink.Equals(string.Empty))
+                                    {
+                                        <li>
+                                            <a href="@Model.GPlusLink" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                        </li>
+                                    }
+
+                                    @if (!Model.YoutubeLink.Equals(string.Empty))
+                                    {
+                                        <li>
+                                            <a href="@Model.YoutubeLink" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a>
+                                        </li>
+                                    }
+
+                                    @*<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+                                        <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
+                                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
+                                        <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
+                                        <li><a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a> </li>*@
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts {
+    @if (!Model.GoogleAnalytic.Equals(string.Empty))
+    {
+        <div>
+            @Html.Raw(Model.GoogleAnalytic)
+        </div>
+    }
+}

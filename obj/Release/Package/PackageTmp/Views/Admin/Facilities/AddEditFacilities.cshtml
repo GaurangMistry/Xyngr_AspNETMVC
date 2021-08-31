@@ -1,0 +1,85 @@
+﻿@model xyngr.Models.FacilitiesViewModel
+@Scripts.Render("~/bundles/jqueryval")
+<script src="~/Scripts/Admin/Facilities/AddEditFacilities.js"></script>
+
+@Html.AntiForgeryToken()
+<section id="basic-form-layouts">
+    <div class="row match-height">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" id="basic-layout-form">Add Facilities</h4>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <ul class="list-inline mb-0">
+                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                            <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                            <li><a data-action="close"><i class="ft-x"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-content collapse show">
+                    <div class="card-body">
+                        <form class="form" id="frmAddFacilities">
+                            <div class="form-body">
+                                <div class="row">
+                                    @Html.HiddenFor(model => model.FacilityID)
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="txtFirstName">Parent Category</label>
+                                            @{
+                                                List<SelectListItem> listParentCategories = new List<SelectListItem>();
+                                                foreach (var m in Model.Categories.Where(o => o.ParentCategoryID == 0))
+                                                {
+                                                    listParentCategories.Add(new SelectListItem { Text = m.CategoryName, Value = m.CategoryID.ToString() });
+                                                }
+                                            }
+
+                                            @Html.DropDownListFor(model => model.ParentCategoryID, listParentCategories, null, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.ParentCategoryID, "", new { @class = "text-danger" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="txtLastName">Category</label>
+                                        <select id="ddlCategory" class="form-control"></select>
+                                        @Html.HiddenFor(model => model.CategoryID, new { id = "hdnCategoryID" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="projectinput1">Name<span class="mendatory">*</span></label>
+                                            @Html.TextBoxFor(model => model.Facility, new { @class = "form-control", id = "txtName", placeholder = "Facilities Name" })
+                                            @Html.ValidationMessageFor(model => model.Facility, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="projectinput1">Status</label>
+                                            @{
+                                                List<SelectListItem> listStatus = new List<SelectListItem>();
+                                                listStatus.Add(new SelectListItem { Text = "Active", Value = "true", Selected = true });
+                                                listStatus.Add(new SelectListItem { Text = "Inactive", Value = "false" });
+                                            }
+
+                                            @Html.DropDownListFor(model => model.Status, listStatus, null, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions right">
+                                    <a href="#" onclick="window.history.back();" class="btn btn-warning mr-1"><i class="ft-x"></i> Cancel</a>
+                                    <button type="button" onclick="SaveFacilities(@ViewBag.IsEditMode)" class="btn btn-primary">
+                                        <i class="la la-check-square-o"></i> Save
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

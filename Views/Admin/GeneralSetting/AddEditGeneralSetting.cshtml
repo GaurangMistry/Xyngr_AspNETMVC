@@ -1,0 +1,356 @@
+﻿@model xyngr.Models.GeneralSettingsViewModel
+@Scripts.Render("~/bundles/jqueryval")
+<script src="~/Scripts/Admin/GeneralSetting/AddEditGeneralSetting.js"></script>
+
+
+<section id="basic-form-layouts">
+    <div class="row match-height">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" id="basic-layout-form">Edit Settings</h4>
+                    <div class="messageDiv">
+                        <label>@ViewBag.Message</label>
+                    </div>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <ul class="list-inline mb-0">
+                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                            <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                            <li><a data-action="close"><i class="ft-x"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-content collapse show">
+                    <div class="card-body">
+                        <form class="form" id="frmAddGeneralSetting">
+                            <div class="form-body">
+                                <div class="row">
+                                    @Html.HiddenFor(model => model.GeneralSettingID)
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="txtPageCode">Page Title<span class="mendatory">*</span></label>
+                                            @Html.TextBoxFor(model => model.PageTitle, new { @class = "form-control", id = "txtPageTitle" })
+                                            @Html.ValidationMessageFor(model => model.PageTitle, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="txtPageCode">Support Email<span class="mendatory">*</span></label>
+                                            @Html.TextBoxFor(model => model.SupportEmail, new { @class = "form-control", id = "txtSupportEmail" })
+                                            @Html.ValidationMessageFor(model => model.SupportEmail, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="txtPageCode">Support Phone<span class="mendatory">*</span></label>
+                                            @Html.TextBoxFor(model => model.SupportPhone, new { @class = "form-control", id = "txtSupportPhone" })
+                                            @Html.ValidationMessageFor(model => model.SupportPhone, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="txtPageCode">Copyright text<span class="mendatory">*</span></label>
+                                            @Html.TextBoxFor(model => model.CopyrightText, new { @class = "form-control", id = "txtCopyrightText" })
+                                            @Html.ValidationMessageFor(model => model.CopyrightText, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="form-section"><i class="la la-location-arrow"></i>Location Information (It will use on Contact page)</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="txtAddress">Address<span class="mendatory">*</span></label> <span id="latitude" class="latlong-lable">latitude</span> <span id="longitude" class="latlong-lable">longitude</span>
+                                            @Html.TextBoxFor(model => model.Address, new { @class = "form-control", id = "txtAddress", placeholder = "Address" })
+                                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+
+                                            @Html.HiddenFor(model => model.Latitude, new { id = "hdnLatitude" })
+                                            @Html.HiddenFor(model => model.Longitude, new { id = "hdnLongitude" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="txtCity">City</label>
+                                            @Html.TextBoxFor(model => model.City, new { @class = "form-control", id = "txtCity", placeholder = "City" })
+                                            @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="txtState">State</label>
+                                            @Html.TextBoxFor(model => model.State, new { @class = "form-control", id = "txtState", placeholder = "State" })
+                                            @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="txtCountry">Country</label>
+                                            @Html.TextBoxFor(model => model.Country, new { @class = "form-control", id = "txtCountry", placeholder = "Country" })
+                                            @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" id="mapViewDetail">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <div class="mapPlaceholder"><span class="fa fa-spin fa-spinner"></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="txtPageCode">Google Analytic Code</label>
+                                            @Html.TextAreaFor(model => model.GoogleAnalytic, new { @class = "form-control", id = "txtGoogleAnalytic", @rows = 4 })
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="form-section"><i class="la la-search"></i>Social Media Links</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="txtFacebook">Facebook</label>
+                                            @Html.TextBoxFor(model => model.FBLink, new { @class = "form-control", id = "txtFacebook", placeholder = "Facebook URL" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="txtGoolgePlus">Goolge Plus</label>
+                                            @Html.TextBoxFor(model => model.GPlusLink, new { @class = "form-control", id = "txtGoolgePlus", placeholder = "Goolge Plus URL" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="txtTwitter">Twitter</label>
+                                            @Html.TextBoxFor(model => model.TwitterLink, new { @class = "form-control", id = "txtTwitter", placeholder = "Twitter URL" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="txtLinkedIn">Instagram</label>
+                                            @Html.TextBoxFor(model => model.InstagramLink, new { @class = "form-control", id = "txtInstagram", placeholder = "Instagram URL" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="txtYoutube">Youtube</label>
+                                            @Html.TextBoxFor(model => model.YoutubeLink, new { @class = "form-control", id = "txtYoutube", placeholder = "Youtube URL" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="form-section"><i class="la la-search"></i>Meta Content for SEO (For HOME Page)</h4>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="txtMetaAuthorContent">Meta Author Content</label>
+                                            @Html.TextAreaFor(model => model.MetaAuthorContent, new { @class = "form-control", id = "txtMetaAuthorContent", placeholder = "Meta Author Content", @rows = 4 })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="txtMetaDescContent">Meta Description Content</label>
+                                            @Html.TextAreaFor(model => model.MetaDescContent, new { @class = "form-control", id = "txtMetaDescContent", placeholder = "Meta Description Content", @rows = 4 })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="txtMetaKeyWordContent">Meta KeyWord Content</label>
+                                            @Html.TextAreaFor(model => model.MetaKeyWordContent, new { @class = "form-control", id = "txtMetaKeyWordContent", placeholder = "Meta KeyWord Content", @rows = 4 })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions right">
+                                    <button type="button" onclick="SaveGeneralSetting(@ViewBag.IsEditMode)" class="btn btn-primary">
+                                        <i class="la la-check-square-o"></i> Save
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvYPT-CHsHLlKHwSbiNDx26aUEuVjf9LM&libraries=places&sensor=false" type="text/javascript"></script>
+
+<script>
+    (function ($) {
+
+        initialize();
+        var options = {
+            zoom: 14,
+            zoomControl: true,
+            scrollwheel: false,
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.TOP_RIGHT
+            }
+        };
+        var styles = [{
+            stylers: [{
+                hue: "#cccccc"
+            }, {
+                saturation: -100
+            }]
+        }, {
+            featureType: "road",
+            elementType: "geometry",
+            stylers: [{
+                lightness: 100
+            }, {
+                visibility: "simplified"
+            }]
+        }, {
+            featureType: "road",
+            elementType: "labels",
+            stylers: [{
+                visibility: "on"
+            }]
+        }, {
+            featureType: "poi",
+            stylers: [{
+                visibility: "off"
+            }]
+        }];
+
+        var newMarker = null;
+        var markers = [];
+        var props = [];
+
+        $('#mapViewDetail').height(300);
+
+        var newMarker = null;
+        setTimeout(function () {
+            map = new google.maps.Map(document.getElementById('mapViewDetail'), options);
+            var styledMapType = new google.maps.StyledMapType(styles, {
+                name: 'Styled'
+            });
+
+            map.mapTypes.set('Styled', styledMapType);
+            map.setCenter(new google.maps.LatLng($('#hdnLatitude').val(), $('#hdnLongitude').val()));
+            $('#latitude').text($('#hdnLatitude').val());
+            $('#longitude').text($('#hdnLongitude').val());
+
+            map.setZoom(10);
+
+            if ($('#txtAddress').length > 0) {
+                newMarker = new google.maps.Marker({
+                    position: new google.maps.LatLng($('#hdnLatitude').val(), $('#hdnLongitude').val()),
+                    map: map,
+                    icon: new google.maps.MarkerImage(
+                        '/images/marker.png',
+                        null,
+                        null,
+                        null,
+                        new google.maps.Size(36, 36)
+                    ),
+                    draggable: true,
+                    animation: google.maps.Animation.DROP,
+                });
+
+                google.maps.event.addListener(newMarker, "mouseup", function (event) {
+                    var latitude = this.position.lat();
+                    var longitude = this.position.lng();
+                    $('#latitude').text(this.position.lat());
+                    $('#longitude').text(this.position.lng());
+                    $('#hdnLatitude').val(newMarker.getPosition().lat());
+                    $('#hdnLongitude').val(newMarker.getPosition().lng());
+
+                    codeLatLng(this.position.lat(), this.position.lng());
+                });
+            }
+        }, 300);
+
+        // functionality for autocomplete address field
+        if ($('#txtAddress').length > 0) {
+            var address = document.getElementById('txtAddress');
+            var addressAuto = new google.maps.places.Autocomplete(address);
+
+            google.maps.event.addListener(addressAuto, 'place_changed', function () {
+                var place = addressAuto.getPlace();
+
+                if (!place.geometry) {
+                    return;
+                }
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                }
+                newMarker.setPosition(place.geometry.location);
+                newMarker.setVisible(true);
+                $('#latitude').text(newMarker.getPosition().lat());
+                $('#longitude').text(newMarker.getPosition().lng());
+
+                $('#hdnLatitude').val(newMarker.getPosition().lat());
+                $('#hdnLongitude').val(newMarker.getPosition().lng());
+
+                codeLatLng(newMarker.getPosition().lat(), newMarker.getPosition().lng());
+                return false;
+            });
+        }
+
+        function initialize() {
+            geocoder = new google.maps.Geocoder();
+        }
+
+        function codeLatLng(lat, lng) {
+            var latlng = new google.maps.LatLng(lat, lng);
+            geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[1]) {
+                        for (var i = 0; i < results[0].address_components.length; i++) {
+                            for (var b = 0; b < results[0].address_components[i].types.length; b++) {
+                                if (results[0].address_components[i].types[b] == "locality") {
+                                    city = results[0].address_components[i];
+                                    //break;
+                                }
+                                else if (results[0].address_components[i].types[b] == "administrative_area_level_3") {
+                                    city = results[0].address_components[i];
+                                    //break;
+                                }
+                                else if (results[0].address_components[i].types[b] == "administrative_area_level_2") {
+                                    region = results[0].address_components[i];
+                                    //break;
+                                }
+                                else if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
+                                    region = results[0].address_components[i];
+                                    //break;
+                                }
+                                else if (results[0].address_components[i].types[b] == "country") {
+                                    country = results[0].address_components[i];
+                                    //break;
+                                }
+                            }
+                        }
+                        $('#txtCity').val(city.long_name);
+                        $('#txtState').val(region.long_name);
+                        $('#txtCountry').val(country.long_name);
+                    }
+                }
+            });
+        }
+
+    })(jQuery);
+
+</script>

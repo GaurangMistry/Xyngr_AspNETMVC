@@ -1,0 +1,49 @@
+﻿@model xyngr.Models.BusinessListingViewModel
+<table id="business-contacts" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle">
+    <thead>
+        <tr>
+            @*<th>Parent Category</th>*@
+            <th>Category</th>
+            <th>Name</th>
+            <th>Total Destination</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.BusinessList)
+        {
+            <tr>
+                @*<td width="20%">
+                    @item.ParentCategory
+                </td>*@
+                <td width="30%">
+                    @item.Category
+                </td>
+                <td width="30%">
+                    @item.Name
+                </td>
+                <td width="20%">
+                    @item.TotalBranch
+                </td>
+                <td width="10%">
+                    @if (item.Status)
+                    {
+                        <span class="active">Activate</span>
+                    }
+                    else
+                    {
+                        <span class="danger">Inactivate</span>
+                    }
+                </td>
+                <td width="10%">
+                    @*@Html.ActionLink("Add Branch", "Create", "Branch", new { id = item.BusinessID }, null)*@
+                    @Html.ActionLink("Edit", "Edit", "Business", new { id = item.BusinessID }, null)
+                    | @Html.ActionLink("Delete", "Delete", "Business", new { id = item.BusinessID }, new { onclick = "return DeleteAlert();" })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

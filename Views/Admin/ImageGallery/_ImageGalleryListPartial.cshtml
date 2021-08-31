@@ -1,0 +1,38 @@
+﻿@using System.Text.RegularExpressions
+@model xyngr.Models.ImageGalleryListingViewModel
+<table id="imagegallery-contacts" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th class="text-center">Image</th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.ImageGalleryList)
+        {
+            <tr>
+                <td width="40%">
+                    @item.Title
+                </td>
+                <td width="10%" class="text-center">
+                   @if(!item.Image.Equals(string.Empty))
+                   {
+                       <img src="/@Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["GalleryImagePath"])/gallerypath/@item.Image" width="70" />
+                   }
+                </td>
+                <td width="10%" class="text-center">
+                    @Html.ActionLink("Edit", "Edit", "ImageGallery", new { id = item.ImageID }, null)
+                    | @Html.ActionLink("Delete", "Delete", "ImageGallery", new { id = item.ImageID }, new { onclick = "return DeleteAlert();" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script src="~/Scripts/Admin/ImageGallery/ImageGalleryList.js"></script>
+<script type="text/javascript">
+    function DeleteAlert() {
+        return confirm("Are you sure you want to delete record?");
+    }
+</script>

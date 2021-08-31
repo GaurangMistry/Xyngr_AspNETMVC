@@ -1,0 +1,62 @@
+﻿@model IEnumerable<xyngr.Models.StaticPagesViewModel>
+@Styles.Render("~/Content/GridCSS")
+
+<section class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-head">
+                <div class="card-header">
+                    <h4 class="card-title">All Static Pages</h4>
+                    <div class="messageDiv">
+                        <label>@ViewBag.Message</label>
+                    </div>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+                    <div class="heading-elements">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="staticpage-contacts" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle">
+                            <thead>
+                                <tr>
+                                    <th>Page Code</th>
+                                    <th>Page Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td width="45%">
+                                            @item.PageCode
+                                        </td>
+                                        <td width="45%">
+                                            @item.PageName
+                                        </td>
+                                        <td width="10%">
+                                            @Html.ActionLink("Edit", "Edit", "StaticPage", new { id = item.PageId }, null)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@Scripts.Render("~/bundles/GridJS")
+
+<script src="~/Scripts/Admin/StaticPage/StaticPageList.js"></script>
+<script type="text/javascript">
+    function DeleteAlert() {
+        return confirm("Are you sure you want to delete record?");
+    }
+</script>

@@ -1,0 +1,105 @@
+﻿@model  xyngr.Models.GeneralSettingsViewModel
+<div class="ed-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ed-com-t1-left">
+                    <ul>
+                        <li>
+                            Follow us on
+                        </li>
+                        @*<li>
+                            <a href="#">Phone: @Model.SupportPhone</a>
+                        </li>*@
+                    </ul>
+                </div>
+                <div class="ed-com-t1-right">
+                    <ul>
+                        <li style="margin-right:10px;">
+                            @{
+                                var dal = new xyngr.Services.DALBranches();
+                                var model = new List<xyngr.Models.BranchesViewModel>();
+                                model = dal.GetBranchForNotification();
+
+                                if (model != null)
+                                {
+                                    if (model.Count > 0)
+                                    {
+                                        <a href="#" onclick="GetNotification()">@Convert.ToString(model.Count)</a>
+                                    }
+                                }
+                            }
+
+                        </li>
+                        <li class="top-date">
+                            @{ 
+                                TimeZoneInfo INDIAN_ZONE = TimeZoneInfo.FindSystemTimeZoneById("India Standard Time");
+                                DateTime indianTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, INDIAN_ZONE);
+                            }
+
+                            @indianTime.ToString("ddd, dd MMM")
+                        </li>
+                        @*<li>
+                                <a href="login.html">Sign In</a>
+                            </li>
+                            <li>
+                                <a href="register.html">Sign Up</a>
+                            </li>*@
+                    </ul>
+                </div>
+                <div class="ed-com-t1-social">
+                    <ul>
+                        @if (!Model.FBLink.Equals(string.Empty))
+                        {
+                            <li>
+                                <a href="@Model.FBLink" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            </li>
+                        }
+
+                        @if (!Model.InstagramLink.Equals(string.Empty))
+                        {
+                            <li>
+                                <a href="@Model.InstagramLink" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                            </li>
+                        }
+
+                        @if (!Model.TwitterLink.Equals(string.Empty))
+                        {
+                            <li>
+                                <a href="@Model.TwitterLink" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            </li>
+                        }
+
+                        @if (!Model.YoutubeLink.Equals(string.Empty))
+                        {
+                            <li>
+                                <a href="@Model.YoutubeLink" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a>
+                            </li>
+                        }
+
+                        @*@if (!Model.GPlusLink.Equals(string.Empty))
+                        {
+                            <li>
+                                <a href="@Model.GPlusLink" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                            </li>
+                        }*@
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function GetNotification() {
+        $.ajax({
+            url: '/Destination/NotificationDestination/0',
+            type: "GET",
+            data: {},
+            success: function (data) {
+                $("#divBody").html(data);
+            }
+        });
+
+    }
+</script>

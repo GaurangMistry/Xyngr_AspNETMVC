@@ -1,0 +1,36 @@
+﻿@using System.Text.RegularExpressions
+@model xyngr.Models.MediaGalleryListingViewModel
+<table id="mediagallery-contacts" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle">
+    <thead>
+        <tr>
+            <th>Video Code</th>
+            <th class="text-center">Video (click to view)</th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.MediaGalleryList)
+        {
+            <tr>
+                <td width="40%">
+                    @item.VideoCode
+                </td>
+                <td width="10%" class="text-center">
+                    <a href="https://www.youtube.com/watch?v=@item.VideoCode" target="_blank"><img src='https://img.youtube.com/vi/@item.VideoCode/0.jpg' width="40%" /></a>
+                </td>
+                <td width="10%" class="text-center">
+                    @Html.ActionLink("Edit", "Edit", "MediaGallery", new { id = item.MediaID }, null)
+                    | @Html.ActionLink("Delete", "Delete", "MediaGallery", new { id = item.MediaID }, new { onclick = "return DeleteAlert();" })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+<script src="~/Scripts/Admin/MediaGallery/MediaGalleryList.js"></script>
+<script type="text/javascript">
+    function DeleteAlert() {
+        return confirm("Are you sure you want to delete record?");
+    }
+</script>

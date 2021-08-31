@@ -1,0 +1,336 @@
+﻿@model xyngr.Models.BranchesViewModelForDetailPage
+@{
+    ViewBag.Title = Model.Branch.ParentCategory + " - " + Model.Branch.Category + " - " + Model.Branch.Address1;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section header {
+    @if (!Model.Branch.MetaAuthorContent.Equals(string.Empty))
+    {
+        <meta name="Author" content="@Model.Branch.MetaAuthorContent" />
+    }
+    @if (!Model.Branch.MetaDescContent.Equals(string.Empty))
+    {
+        <meta name="Description" content="@Model.Branch.MetaDescContent" />
+    }
+    @if (!Model.Branch.MetaKeyWordContent.Equals(string.Empty))
+    {
+        <meta name="Keywords" content="@Model.Branch.MetaKeyWordContent" />
+    }
+
+    @*// Open Graph*@
+    <meta content="@Model.Branch.ImageURL" property="og:image" />
+    <meta content="Website" property="og:type" />
+    <meta content="www.xyngr.com" property="og:site_name" />
+    <meta content="@Model.Branch.BusinessName - @Model.Branch.Category" property="og:title" />
+    <meta content="@Model.Branch.SmallDescription" property="og:description" />
+    <meta content="@Request.Url" property="og:url" />
+
+    @*// Twitter*@
+    <meta name='twitter:card' content="Destination" />
+    <meta name='twitter:site' content="www.xyngr.com" />
+    <meta name='twitter:title' content="@Model.Branch.BusinessName - @Model.Branch.Category" />
+    <meta name='twitter:description' content="@Model.Branch.SmallDescription" />
+    <meta name='twitter:image' content="@Model.Branch.ImageURL" />
+
+    @*// Canonical*@
+    <link href="@Request.Url" rel="canonical" />
+}
+
+<!--====== BANNER ==========-->
+<section>
+    <div class="rows inner_banner inner_banner_2" style="background:url(@Model.Branch.ImageURL)">
+        <div class="container">
+            <h2>
+                @Model.Branch.Address1
+                <span class="tour_star">
+                    @if (Model.Branch.Rating == 1)
+                    {
+                        <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                    }
+                    else if (Model.Branch.Rating == 2)
+                    {
+                        <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                    }
+                    else if (Model.Branch.Rating == 3)
+                    {
+                        <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                    }
+                    else if (Model.Branch.Rating == 4)
+                    {
+                        <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                    }
+                    else if (Model.Branch.Rating == 5)
+                    {
+                        <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i>
+                    }
+                </span>
+                <span class="tour_rat">@Model.Branch.Rating</span>
+            </h2>
+            <p>@Model.Branch.SmallDescription</p>
+        </div>
+    </div>
+</section>
+<!--====== TOUR DETAILS - BOOKING ==========-->
+<section>
+    <div class="rows banner_book" id="inner-page-title">
+        <div class="container">
+            <div class="banner_book_1">
+                <ul>
+                    <li class="dl4 location text-left">@Model.Branch.Category</li>
+                    @if (!Model.Branch.ExternalURL.Equals(string.Empty))
+                    {
+                        <li class="dl4 right"><a href="@Model.Branch.ExternalURL" target="_blank">Book Now</a> </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!--====== TOUR DETAILS ==========-->
+<section>
+    <div class="rows inn-page-bg com-colo">
+        <div class="container inn-page-con-bg tb-space">
+            <div class="col-md-9">
+                <!--====== TOUR TITLE ==========-->
+                @*<div class="tour_head">
+            <h2>
+
+            </h2>
+        </div>*@
+                <!--====== TOUR DESCRIPTION ==========-->
+                @if (!Model.Branch.Description.Equals(string.Empty))
+                {
+                    <div class="tour_head">
+                        @*tour_head1 hotel-com-color*@
+                        <h2>About @Model.Branch.Address1</h2>
+                        @Html.Raw(Model.Branch.Description)
+
+                    </div>
+                }
+
+                <div>
+                    @{
+                        if (Model.Branch.Commentlist.Count() > 0)
+                        {
+                            <div class="dir-rat">
+                                <div class="dir-rat-inn dir-rat-title">
+                                    <h3>Review and Comments</h3>
+                                </div>
+
+                                @{
+                                    foreach (var item in Model.Branch.Commentlist)
+                                    {
+
+                                        <!--COMMENT RATING-->
+                                        <div class="dir-rat-inn dir-rat-review">
+                                            <div class="row">
+                                                <div class="col-md-3 dir-rat-left">
+                                                    <img src="@item.CommentWriterImageUrl" alt="@item.CommentWriterName" width="50" height="50">
+                                                    <p>@item.CommentWriterName<span>@Convert.ToDateTime(@item.CreatedDate).ToString("dd MMM yyy") </span> </p>
+                                                </div>
+                                                <div class="col-md-9 dir-rat-right">
+                                                    @Html.Raw(item.Comments)
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+                        }
+                    }
+
+                </div>
+
+
+                <!--====== ROOMS: HOTEL BOOKING ==========-->
+                @if (Model.Branch.ImageGallerylist.Count() > 0)
+                {
+                    <div class="tour_head1 hotel-book-room">
+                        <h3>Photo Gallery</h3>
+                        <div id="myCarousel1" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators carousel-indicators-1">
+                                @{
+                                    var icount = 0;
+                                    foreach (var item in Model.Branch.ImageGallerylist)
+                                    {
+                                        <li data-target="#myCarousel1" data-slide-to="@icount">
+                                            <img src="~/Upload/GalleryImages/gallerypath/@item.Image" alt="@item.Title">
+                                        </li>
+                                        icount++;
+                                    }
+                                }
+                            </ol>
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner carousel-inner1" role="listbox">
+                                @{
+
+                                    var icountNew = 0;
+                                    var isActive = "";
+                                    foreach (var item in Model.Branch.ImageGallerylist)
+                                    {
+                                        if (icountNew == 0)
+                                        {
+                                            isActive = "active";
+                                        }
+                                        else
+                                        {
+                                            isActive = "";
+                                        }
+                                        <div class="item @isActive"> <img src="~/Upload/GalleryImages/gallerypath/@item.Image" alt="@item.Title" width="460" height="345"> </div>
+                                        icountNew++;
+                                    }
+                                }
+                            </div>
+                            <!-- Left and right controls -->
+                            <a class="left carousel-control" href="#myCarousel1" role="button" data-slide="prev"> <span><i class="fa fa-angle-left hotel-gal-arr" aria-hidden="true"></i></span> </a>
+                            <a class="right carousel-control" href="#myCarousel1" role="button" data-slide="next"> <span><i class="fa fa-angle-right hotel-gal-arr hotel-gal-arr1" aria-hidden="true"></i></span> </a>
+                        </div>
+                    </div>
+                }
+
+                <div class="tour_head1">
+                    <h3>Venue: @Model.Branch.BusinessName</h3>
+                </div>
+
+                @if (!Model.Branch.OpeningHours.Equals(string.Empty))
+                {
+                    <div class="tour_head1">
+                        <h3>Time</h3>
+                        <div class="pl36">
+                            <p>@Html.Raw(Model.Branch.OpeningHours)</p>
+                        </div>
+                    </div>
+                }
+
+                <!--====== TOUR LOCATION ==========-->
+                <div class="tour_head1 tout-map map-container">
+                    <h3>Location: <span> @Model.Branch.Address2 </span></h3>
+                    <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDClyAC1U-y_X06_OjJQqRoxjt2_zuqxSw&q=@Model.Branch.Address2" allowfullscreen></iframe>
+                </div>
+                <!--====== TOUR LOCATION ==========-->
+                @if (Model.Branch.MediaGallerylist.Count() > 0)
+                {
+                    <div class="tour_head1">
+                        <h3>Videos</h3>
+                        <div class="row">
+                            @foreach (var media in Model.Branch.MediaGallerylist)
+                            {
+                                if (!media.VideoCode.Equals(string.Empty))
+                                {
+                                    <div class="col-md-6">
+                                        <iframe width="100%" height="250" src="https://www.youtube.com/embed/@media.VideoCode" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    </div>
+                }
+
+
+                <!--====== HOTEL ROOM TYPES ==========-->
+                @if (Model.RelatedBranches.Count() > 0)
+                {
+                    <div class="tour_head1">
+                        <h3>Related Place you may like</h3>
+                        <div class="tr-room-type">
+                            <ul>
+                                @foreach (var item in Model.RelatedBranches)
+                                {
+                                    <li>
+                                        <div class="tr-room-type-list">
+                                            <div class="col-md-3 tr-room-type-list-1">
+                                                <img src="@item.ImageURL" alt="" />
+                                            </div>
+                                            <div class="col-md-6 tr-room-type-list-2">
+                                                <h4>@item.Address1</h4>
+                                                <p>@Html.Raw(item.SmallDescription) </p>
+                                            </div>
+                                            <div class="col-md-3 tr-room-type-list-3"> <a href="/detail/@Xyngr.helper.CommonLogic.RemoveSpecialCharacter(item.Address1)-@item.BranchID" class="hot-page2-alp-quot-btn spec-btn-text">Detail</a> </div>
+                                        </div>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+                    </div>
+                }
+
+            </div>
+            <div class="col-md-3 tour_r">
+                <!--====== SPECIAL OFFERS ==========-->
+                @if (!Model.Branch.SalePeriod.Equals(string.Empty))
+                {
+                    <div class="tour_right tour_offer">
+                        <div class="band1"><img src="../../../images/offer.png" alt="" /> </div>
+                        <p>Special Offer</p>
+                        <h4>
+                            @Model.Branch.SalePeriod
+                        </h4>
+                    </div>
+                }
+
+                <!--====== PACKAGE SHARE ==========-->
+                <div class="tour_right head_right tour_social tour-ri-com">
+                    <h3>Share This</h3>
+                    <ul class="text-center width-100">
+                        <li>
+                            <a onclick="window.open(this.href,'_blank', 'width=700, height=300' ); return false;" href='https://www.facebook.com/sharer/sharer.php?app_id=1046574335360031&amp;sdk=joey&amp;u=@Request.Url&amp;display=popup&amp;ref=plugin&amp;src=share_button' title='facebook'><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a onclick="window.open(this.href,'_blank', 'width=700' ); return false;" href='https://plus.google.com/share?url=@Request.Url' title='google-plus'><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a href='https://twitter.com/intent/tweet?original_referer=@Request.Url&amp;text=xyngr.com&amp;tw_p=tweetbutton&amp;url=@Request.Url&amp;via=Xyngr' title='twitter'><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <a onclick="window.open(this.href,'_blank', 'width=700, height=300' ); return false;" href='https://www.pinterest.com/pin/create/button/?url=@Request.Url&amp;media=@Model.Branch.ImageURL&amp;description=@Model.Branch.SmallDescription' title='pinterest'><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+
+                    <script type="text/javascript">!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+
+                    <!-- Place this tag after the last share tag. -->
+                    <script type="text/javascript">
+                        (function () {
+                            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                            po.src = 'https://apis.google.com/js/platform.js';
+                            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                        })();
+                    </script>
+
+                </div>
+                <!--====== HELP PACKAGE ==========-->
+                <div class="tour_right head_right tour_help tour-ri-com">
+                    <h3>Contact</h3>
+                    <div class="tour_help_1">
+                        <h4 class="tour_help_1_call">Call Us Now</h4>
+                        <h4><i class="fa fa-phone" aria-hidden="true"></i> @Model.Branch.Phone</h4>
+                        <h4><i class="fa fa-envelope" aria-hidden="true"></i> @Model.Branch.Email</h4>
+                    </div>
+                </div>
+                <!--====== TRIP INFORMATION ==========-->
+                <!--====== PUPULAR TOUR PACKAGES ==========-->
+                @if (Model.PopularBranches.Count() > 0)
+                {
+                    <div class="tour_right tour_rela tour-ri-com">
+                        <h3>Popular Destination</h3>
+                        @foreach (var item in Model.PopularBranches)
+                        {
+                            <div class="tour_rela_1">
+                                <img src="@item.ImageURL" alt="@item.BusinessName" />
+                                <h4>@item.Address1</h4>
+                                <p>@Html.Raw(item.SmallDescription)</p> <a href="/detail/@Xyngr.helper.CommonLogic.RemoveSpecialCharacter(item.Address1)-@item.BranchID" class="link-btn">View</a>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

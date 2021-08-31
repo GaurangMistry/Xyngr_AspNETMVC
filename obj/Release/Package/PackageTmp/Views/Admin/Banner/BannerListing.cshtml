@@ -1,0 +1,74 @@
+﻿@model IEnumerable<xyngr.Models.BannersViewModel>
+@Styles.Render("~/Content/GridCSS")
+
+<section class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-head">
+                <div class="card-header">
+                    <h4 class="card-title">All Banners For Home page</h4>
+                    <div class="messageDiv">
+                        <label>@ViewBag.Message</label>
+                    </div>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <button class="btn btn-primary btn-sm" onclick="javascript:window.location.href='/Admin/Banner/Create'"><i class="ft-plus white"></i>Add Banner</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="banner-contacts" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle">
+                            <thead>
+                                <tr>
+                                    <th>Rate</th>
+                                    <th>Title</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td width="20%">
+                                            @item.Rating
+                                        </td>
+                                        <td width="80%">
+                                            @item.Title
+                                        </td>
+                                        <td width="10%">
+                                            @if (item.Status)
+                                            {
+                                                <span class="active">Activate</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="danger">Inactivate</span>
+                                            }
+                                        </td>
+                                        <td width="10%">
+                                            @Html.ActionLink("Edit", "Edit", "Banner", new { id = item.BannerID }, null)
+                                            | @Html.ActionLink("Delete", "Delete", "Banner", new { id = item.BannerID }, new { onclick = "return DeleteAlert();" })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@Scripts.Render("~/bundles/GridJS")
+
+<script src="~/Scripts/Admin/Banner/BannerList.js"></script>
+<script type="text/javascript">
+    function DeleteAlert() {
+        return confirm("Are you sure you want to delete record?");
+    }
+</script>

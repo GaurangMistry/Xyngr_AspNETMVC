@@ -1,0 +1,137 @@
+﻿@using System.Text.RegularExpressions
+@model xyngr.Models.CommentListingViewModel
+@Styles.Render("~/Content/GridCSS")
+
+<section class="row">
+    <div class="col-12">
+        <div class="card" id="divcard">
+            <div class="card-head">
+                <div class="card-header">
+                    <h4 class="card-title">All Comments</h4>
+                    <div class="messageDiv">
+                        <label>@ViewBag.Message</label>
+                    </div>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <button class="btn btn-primary btn-sm" onclick="javascript:window.location.href='/Admin/Comment/Create?buID='+ $('#dllBusiness').val() +'&brID='+ $('#dllBranch').val() "><i class="ft-plus white"></i> Add Comment</button>
+                    </div>
+                    <div class="row">
+                        <input type="hidden" value="@Model.BusinessID" id="hdnBusinessID" />
+                        <input type="hidden" value="@Model.BranchID" id="hdnBranchID" />
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="Business">Venue</label>
+                                @{
+                                    List<SelectListItem> listBusinessList = new List<SelectListItem>();
+                                    //listBusinessList.Add(new SelectListItem { Text = "All", Value = "0" });
+                                    var isselected = false;
+                                    foreach (var m in Model.BusinessList)
+                                    {
+                                        if (m.BusinessID == Model.BusinessID)
+                                        {
+                                            isselected = true;
+                                        }
+                                        else
+                                        {
+                                            isselected = false;
+                                        }
+                                        listBusinessList.Add(new SelectListItem { Text = m.Name, Value = m.BusinessID.ToString(), Selected = isselected });
+
+                                    }
+                                }
+                                @Html.DropDownList("dllBusiness", listBusinessList, null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-3" id="divBranch">
+                            <label for="ddlBranch">Destination</label>
+                            @{
+                                List<SelectListItem> listBranchList = new List<SelectListItem>();
+                                //listBranchList.Add(new SelectListItem { Text = "All", Value = "0" });
+                                var isselectedBranch = false;
+                                foreach (var m in Model.BranchList)
+                                {
+                                    if (m.BranchID == Model.BranchID)
+                                    {
+                                        isselectedBranch = true;
+                                    }
+                                    else
+                                    {
+                                        isselectedBranch = false;
+                                    }
+
+                                    listBranchList.Add(new SelectListItem { Text = m.Address2, Value = m.BranchID.ToString(), Selected = isselectedBranch });
+                                }
+                            }
+                            @Html.DropDownList("dllBranch", listBranchList, null, new { @class = "form-control " })
+                        </div>
+                        <div class="col-md-6"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="table-responsive" id="tblComments">
+                        @Html.Partial("~/Views/Admin/Comment/_CommentsListPartial.cshtml")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@Scripts.Render("~/bundles/GridJS")
+
+<script>
+    $(document).ready(function () {
+        BindBranchDropdownByBusinessID($("#hdnBusinessID").val());
+
+        $("#dllBranch").change(function () {
+            ShowLoading("divcard");
+            GetCommentsByBranchID(this.value);
+        });
+
+        $("#dllBusiness").change(function () {
+            //ShowLoading("divBranch");
+            ShowLoading("divcard");
+            BindBranchDropdownByBusinessID(this.value);
+        });
+    });
+
+    function BindBranchDropdownByBusinessID(id) {
+        $.ajax({
+            url: '/Admin/Branch/GetBranchDropdownByBusinessID/' + id,
+            type: "GET",
+            success: function (data) {
+                $('#dllBranch').empty();
+
+                $.each(data, function (i) {
+                    debugger;
+                    var selected = "";
+                    if ($("#hdnBranchID").val() != null) {
+                        if ($("#hdnBranchID").val() == data[i].Value) {
+                            selected = "selected='selected'";
+                        }
+                        else
+                            selected = "";
+                    }
+                    var optionhtml = '<option  ' + selected + '  value="' + data[i].Value + '">' + data[i].Text + '</option>';
+                    $("#dllBranch").append(optionhtml);
+                });
+
+                GetCommentsByBranchID($("#dllBranch").val());
+            }
+        });
+    }
+    function GetCommentsByBranchID(id) {
+        if (id == null)
+            id = 0;
+
+        $.ajax({
+            url: '/Admin/Comment/GetCommentsViewByBranchID/' + id,
+            type: "GET",
+            success: function (data) {
+                $("#tblComments").html(data);
+            }
+        });
+    }
+</script>

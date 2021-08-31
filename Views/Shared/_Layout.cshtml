@@ -1,0 +1,142 @@
+﻿@using xyngr.Services
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Xyngr @ViewBag.Title</title>
+    <!-- FAV ICON -->
+    <link rel="shortcut icon" href="/images/favicon.png" />
+
+
+    @Styles.Render("~/FrontContent/css/above-fold")
+    @Scripts.Render("~/bundles/JS/above-fold")
+    <!-- GOOGLE FONTS -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    @RenderSection("header", required: false)
+
+    <script type="text/javascript">
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '1046574335360031',
+                xfbml: true,
+                version: 'v2.2'
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=1046574335360031&version=v2.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <script type="text/javascript">!function (a, b) { "use strict"; function f() { if (!d) { d = !0; for (var a = 0; a < c.length; a++) c[a].fn.call(window, c[a].ctx); c = [] } } function g() { "complete" === document.readyState && f() } a = a || "docReady", b = b || window; var c = [], d = !1, e = !1; b[a] = function (a, b) { if ("function" != typeof a) throw new TypeError("callback for docReady(fn) must be a function"); return d ? void setTimeout(function () { a(b) }, 1) : (c.push({ fn: a, ctx: b }), void ("complete" === document.readyState || !document.attachEvent && "interactive" === document.readyState ? setTimeout(f, 1) : e || (document.addEventListener ? (document.addEventListener("DOMContentLoaded", f, !1), window.addEventListener("load", f, !1)) : (document.attachEvent("onreadystatechange", g), window.attachEvent("onload", f)), e = !0))) } }("docReady", window);</script>
+    <script type="text/javascript">function load_css_async(e) { var n = function () { var n = document.createElement("link"); n.rel = "stylesheet", n.href = e; var t = document.getElementsByTagName("head")[0]; t.parentNode.insertBefore(n, t) }, t = requestAnimationFrame || mozRequestAnimationFrame || webkitRequestAnimationFrame || msRequestAnimationFrame; t ? t(n) : window.addEventListener("load", n) }</script>
+
+    @*@Styles.RenderFormat("<script type=\"text/javascript\">load_css_async('{0}')</script>", "~/FrontContent/css/above-fold")*@
+    @Styles.RenderFormat("<script type=\"text/javascript\">load_css_async('{0}')</script>", "~/FrontContent/css/below-fold")
+    @*@Scripts.RenderFormat("<script src='{0}' defer></script>", "~/bundles/JS/above-fold")*@
+
+</head>
+<body>
+    <input type="hidden" id="hdnCity" />
+    <input type="hidden" id="hdnState" />
+    <input type="hidden" id="hdnCountry" />
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="status">&nbsp;</div>
+    </div>
+
+    @{
+        DALCategory dal = new DALCategory();
+        var CategoryListing = dal.GetCategoryByParentIDForFront(0);
+
+        DALGeneralSettings objGeneralSetting = new DALGeneralSettings();
+        var Generalsetting = objGeneralSetting.GetGeneralSettingsByID(1);
+    }
+
+    @Html.Partial("~/Views/Shared/_MobileMenuPartial.cshtml", CategoryListing)
+
+
+    <section>
+
+        <!-- TOP BAR -->
+        @Html.Partial("~/Views/Shared/_HeaderPartial.cshtml", Generalsetting)
+
+        <!-- LOGO AND MENU SECTION -->
+
+        @Html.Partial("~/Views/Shared/_MenuPartial.cshtml", CategoryListing)
+
+        <!-- TOP SEARCH BOX -->
+        @Html.Partial("~/Views/Shared/_SearchPartial.cshtml", CategoryListing)
+        <!-- END TOP SEARCH BOX -->
+    </section>
+    <!--END HEADER SECTION-->
+    <div id="divBody">
+        @RenderBody()
+    </div>
+
+    <!--====== FOOTER 2 ==========-->
+    @Html.Partial("~/Views/Shared/_FooterPartial.cshtml", Generalsetting)
+
+    <!--====== FOOTER - COPYRIGHT ==========-->
+    <section>
+        <div class="rows copy">
+            <div class="container">
+                <p>Copyrights © @DateTime.Now.Year.ToString() Xyngr.com. All Rights Reserved</p>
+            </div>
+        </div>
+    </section>
+
+    @{
+        if (!Request.Url.LocalPath.ToString().Equals("/Home") && !Request.Url.LocalPath.ToString().Equals("/"))
+        {
+            <section>
+                <div class="icon-float">
+                    <ul>
+                        <li><a href="#" class="sh">Share</a> </li>
+                        <li>
+                            <a class="fb1" onclick="window.open(this.href,'_blank', 'width=700, height=300' ); return false;" href='https://www.facebook.com/sharer/sharer.php?app_id=1046574335360031&amp;sdk=joey&amp;u=@Request.Url&amp;display=popup&amp;ref=plugin&amp;src=share_button' title='facebook'><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        </li>
+                        @*<li>
+                                <a class="gp1" onclick="window.open(this.href,'_blank', 'width=700' ); return false;" href='https://plus.google.com/share?url=@Request.Url' title='google-plus'><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                            </li>*@
+                        <li>
+                            <a class="tw1" href='https://twitter.com/intent/tweet?original_referer=@Request.Url&amp;text=xyngr.com&amp;tw_p=tweetbutton&amp;url=@Request.Url&amp;via=Xyngr' title='twitter'><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                        </li>
+                        @*<li>
+                                <a class="pr1" onclick="window.open(this.href,'_blank', 'width=700, height=300' ); return false;" href='https://www.pinterest.com/pin/create/button/?url=@Request.Url&amp;media=&amp;description=' title='pinterest'><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                            </li>*@
+                    </ul>
+
+                    <script type="text/javascript">!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+
+                    <!-- Place this tag after the last share tag. -->
+                    <script type="text/javascript">
+                        (function () {
+                            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                            po.src = 'https://apis.google.com/js/platform.js';
+                            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                        })();
+                    </script>
+
+                </div>
+            </section>
+        }
+    }
+
+    @Scripts.RenderFormat("<script src='{0}' defer></script>", "~/bundles/JS/below-fold")
+    <!-- GOOGLE FONTS -->
+    <script type="text/javascript">load_css_async('https://fonts.googleapis.com/css?family=Poppins%7CQuicksand:400,500,700')</script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

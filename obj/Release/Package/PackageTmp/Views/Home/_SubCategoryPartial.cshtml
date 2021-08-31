@@ -1,0 +1,12 @@
+﻿@model IEnumerable<xyngr.Models.CategoryViewModel>
+
+@{
+    List<SelectListItem> listCategory = new List<SelectListItem>();
+    listCategory.Add(new SelectListItem { Text = "All", Value = "0" });
+    foreach (var m in Model)
+    {
+
+        listCategory.Add(new SelectListItem { Text = m.CategoryName, Value = m.CategoryID.ToString() });
+    }
+}
+@Html.DropDownList("ddlSubCategory", listCategory, null, new { @class = "select-category search-sub-category" })

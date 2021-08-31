@@ -1,0 +1,88 @@
+﻿@model xyngr.Models.BusinessListingViewModel
+@Styles.Render("~/Content/GridCSS")
+
+<section class="row">
+    <div class="col-12">
+        <div class="card" id="divcard">
+            <div class="card-head">
+                <div class="card-header">
+                    <h4 class="card-title">All Venues</h4>
+                    <div class="messageDiv">
+                        <label>@ViewBag.Message</label>
+                    </div>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <button class="btn btn-primary btn-sm" onclick="javascript:window.location.href='/Admin/Business/Create?pcid='+ $('#dllParentCategory').val() "><i class="ft-plus white"></i>Add Venue</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="Business">Parent Category</label>
+                                @{
+                                    List<SelectListItem> listParentCategories = new List<SelectListItem>();
+                                    var isselected = false;
+                                    foreach (var m in Model.Categories.Where(o => o.ParentCategoryID == 0).OrderBy(o => o.CategoryName))
+                                    {
+                                        if (m.CategoryID == Model.ParentCategoryID)
+                                        {
+                                            isselected = true;
+                                        }
+                                        else
+                                        {
+                                            isselected = false;
+                                        }
+
+                                        listParentCategories.Add(new SelectListItem { Text = m.CategoryName, Value = m.CategoryID.ToString(), Selected = isselected });
+                                    }
+                                }
+
+                                @Html.DropDownList("dllParentCategory", listParentCategories, null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-9"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="table-responsive" id="tblBusiness">
+                        @Html.Partial("~/Views/Admin/Business/_BusinessListPartial.cshtml")
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@Scripts.Render("~/bundles/GridJS")
+
+<script src="~/Scripts/Admin/Business/BusinessList.js"></script>
+<script type="text/javascript">
+    function DeleteAlert() {
+        return confirm("Are you sure you want to delete record?");
+    }
+
+    $(document).ready(function () {
+        GetBusinessByCategory($("#dllParentCategory").val());
+
+        $("#dllParentCategory").change(function () {
+            ShowLoading("divcard");
+            GetBusinessByCategory(this.value);
+        });
+    });
+
+
+    function GetBusinessByCategory(id) {
+        if (id == null)
+            id = 0;
+
+        $.ajax({
+            url: '/Admin/Business/GetBusinessViewByCategoryID/' + id,
+            type: "GET",
+            success: function (data) {
+                $("#tblBusiness").html(data);
+            }
+        });
+    }
+</script>

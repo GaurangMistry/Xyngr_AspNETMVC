@@ -1,0 +1,272 @@
+﻿@model IEnumerable<xyngr.Models.BranchesViewModel>
+
+<!--====== HOTELS LIST ==========-->
+<section class="hot-page2-alp hot-page2-pa-sp-top" @*style="background: url(@Model.Business.ImageURL) no-repeat center top #e6e6e6;background-attachment: fixed;"*@>
+    <div class="container">
+        <div class="row inner_banner inner_banner_3 bg-none" style="padding:0px;">
+            <div class="hot-page2-alp-tit">
+                @*<h1>@ViewBag.ParentTitle - @ViewBag.Title</h1>*@
+                <ul>
+                    <li><a href="/">Home</a> </li>
+                    <li><i class="fa fa-angle-right" aria-hidden="true"></i> </li>
+                    <li>@ViewBag.Title</li>
+                </ul>
+                @*<p>World's leading Hotel Booking website,Over 30,000 Hotel rooms worldwide. </p>*@
+            </div>
+        </div>
+        <div class="row">
+            <div class="hot-page2-alp-con">
+                <!--LEFT LISTINGS-->
+                <div class="col-md-3 hot-page2-alp-con-left">
+                    <!--PART 1 : LEFT LISTINGS-->
+                    <div class="hot-page2-alp-con-left-1">
+                        <h3>Filter Area</h3>
+                    </div>
+                    <!--PART 4 : LEFT LISTINGS-->
+                    <div class="hot-page2-alp-l3 hot-page2-alp-l-com hidden">
+                        <h4><i class="fa fa-map-marker" aria-hidden="true"></i> Select City & Country</h4>
+                        <div class="hot-page2-alp-l-com1 hot-page2-alp-p4">
+                            <form>
+                                <ul>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp41" class="styled" type="checkbox" checked="">
+                                            <label for="chp41"> Nashville, USA </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp42" class="styled" type="checkbox">
+                                            <label for="chp42"> Hull, England </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp43" class="styled" type="checkbox">
+                                            <label for="chp43"> Seoul, South Korea </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp44" class="styled" type="checkbox">
+                                            <label for="chp44"> Ljubljana, Slovenia </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp45" class="styled" type="checkbox">
+                                            <label for="chp45"> Wroclaw, Poland </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </form> <a href="javascript:void(0);" class="hot-page2-alp-p4-btn-s">view more</a>
+                        </div>
+                    </div>
+                    <!--END PART 4 : LEFT LISTINGS-->
+                    <!--END PART 5 : LEFT LISTINGS-->
+                    <!--PART 6 : LEFT LISTINGS-->
+                    <div class="hot-page2-alp-l3 hot-page2-alp-l-com">
+                        <h4><i class="fa fa-star-o" aria-hidden="true"></i> Select Ratings</h4>
+                        <div class="hot-page2-alp-l-com1 hot-page2-alp-p5">
+                            <form>
+                                <ul>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp61" class="styled" type="checkbox" checked="">
+                                            <label for="chp61">
+                                                <span class="ho-hot-rat-star-list">
+                                                    <span class="hot-list-left-part-rat">5.0</span> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp62" class="styled" type="checkbox">
+                                            <label for="chp62">
+                                                <span class="ho-hot-rat-star-list">
+                                                    <span class="hot-list-left-part-rat">4.0</span> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp63" class="styled" type="checkbox">
+                                            <label for="chp63">
+                                                <span class="ho-hot-rat-star-list">
+                                                    <span class="hot-list-left-part-rat">3.0</span> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp64" class="styled" type="checkbox">
+                                            <label for="chp64">
+                                                <span class="ho-hot-rat-star-list">
+                                                    <span class="hot-list-left-part-rat">2.0</span> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp65" class="styled" type="checkbox">
+                                            <label for="chp65">
+                                                <span class="ho-hot-rat-star-list">
+                                                    <span class="hot-list-left-part-rat">1.0</span> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </form> <a href="javascript:void(0);" class="hot-page2-alp-p5-btn-s">view more</a>
+                        </div>
+                    </div>
+                    <!--END PART 5 : LEFT LISTINGS-->
+                    <!--PART 6 : LEFT LISTINGS-->
+                    <div class="hot-page2-alp-l3 hot-page2-alp-l-com">
+                        <h4><i class="fa fa-heart-o" aria-hidden="true"></i>Other Categories</h4>
+                        <div class="hot-page2-alp-l-com1 hot-page2-alp-p5">
+                            <form>
+                                <ul>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp71" class="styled" type="checkbox" checked="">
+                                            <label for="chp71"> Swimming pools </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp72" class="styled" type="checkbox">
+                                            <label for="chp72"> Wi-Fi & Computer </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp73" class="styled" type="checkbox">
+                                            <label for="chp73"> Kitchen facilities </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp74" class="styled" type="checkbox">
+                                            <label for="chp74"> Music & GYM </label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="checkbox checkbox-info checkbox-circle">
+                                            <input id="chp75" class="styled" type="checkbox">
+                                            <label for="chp75"> Dining </label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </form> <a href="javascript:void(0);" class="hot-page2-alp-p5-btn-s">view more</a>
+                        </div>
+                    </div>
+                    <!--END PART 7 : LEFT LISTINGS-->
+                </div>
+                <!--END LEFT LISTINGS-->
+                <!--RIGHT LISTINGS-->
+                <div class="col-md-9 hot-page2-alp-con-right">
+                    <div class="hot-page2-alp-con-right-1">
+                        <!--LISTINGS-->
+                        <div class="row">
+                            @foreach (var item in Model)
+                            {
+                                <div class="hot-page2-alp-r-list">
+                                    <div class="col-md-3 hot-page2-alp-r-list-re-sp">
+                                        <a href="javascript:void(0);">
+                                            <div class="hotel-list-score">@item.Rating</div>
+                                            <div class="hot-page2-hli-1"> <img src="@item.ImageURL" alt=""> </div>
+                                            @*<div class="hom-hot-av-tic hom-hot-av-tic-list"> Available Rooms: 42 </div>*@
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="hot-page2-alp-ri-p2">
+                                            <a href="/detail/@Xyngr.helper.CommonLogic.RemoveSpecialCharacter(item.Address1)-@item.BranchID"><h3>@item.BusinessName</h3></a>
+                                            <ul>
+                                                <li>@item.Address1, @item.Address2</li>
+                                                <li>@item.Phone</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="hot-page2-alp-ri-p3">
+                                            @if (!item.SalePeriod.Equals(string.Empty))
+                                            {
+                                                <div class="hot-page2-alp-r-hot-page-rat">@item.SalePeriod</div>
+                                            }
+
+                                            @*<span class="hot-list-p3-1">Price Per Night</span>
+                                                <span class="hot-list-p3-2">$650</span>*@
+                                            <span class="hot-list-p3-4">
+                                                <a href="/detail/@item.Address1.Replace(":","").Replace("&","").Replace("\\","").Replace("/","").Replace(" ","").Replace("-","")-@item.BranchID" class="hot-page2-alp-quot-btn">Detail</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!--END RIGHT LISTINGS-->
+            </div>
+        </div>
+    </div>
+</section>
+<!--====== TIPS BEFORE TRAVEL ==========-->
+@*<section>
+    <div class="rows tips tips-home tb-space home_title">
+        <div class="container tips_1">
+            <!-- TIPS BEFORE TRAVEL -->
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <h3>Tips Before Travel</h3>
+                <div class="tips_left tips_left_1">
+                    <h5>Bring copies of your passport</h5>
+                    <p>Aliquam pretium id justo eget tristique. Aenean feugiat vestibulum blandit.</p>
+                </div>
+                <div class="tips_left tips_left_2">
+                    <h5>Register with your embassy</h5>
+                    <p>Mauris efficitur, ante sit amet rhoncus malesuada, orci justo sollicitudin.</p>
+                </div>
+                <div class="tips_left tips_left_3">
+                    <h5>Always have local cash</h5>
+                    <p>Donec et placerat ante. Etiam et velit in massa. </p>
+                </div>
+            </div>
+            <!-- CUSTOMER TESTIMONIALS -->
+            <div class="col-md-8 col-sm-6 col-xs-12 testi-2">
+                <!-- TESTIMONIAL TITLE -->
+                <h3>Customer Testimonials</h3>
+                <div class="testi">
+                    <h4>John William</h4>
+                    <p>Ut sed sem quis magna ultricies lacinia et sed tortor. Ut non tincidunt nisi, non elementum lorem. Aliquam gravida sodales</p> <address>Illinois, United States of America</address>
+                </div>
+                <!-- ARRANGEMENTS & HELPS -->
+                <h3>Arrangement & Helps</h3>
+                <div class="arrange">
+                    <ul>
+                        <!-- LOCATION MANAGER -->
+                        <li>
+                            <a href="#"><img src="../../../images/Location-Manager.png" alt=""> </a>
+                        </li>
+                        <!-- PRIVATE GUIDE -->
+                        <li>
+                            <a href="#"><img src="../../../images/Private-Guide.png" alt=""> </a>
+                        </li>
+                        <!-- ARRANGEMENTS -->
+                        <li>
+                            <a href="#"><img src="../../../images/Arrangements.png" alt=""> </a>
+                        </li>
+                        <!-- EVENT ACTIVITIES -->
+                        <li>
+                            <a href="#"><img src="../../../images/Events-Activities.png" alt=""> </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>*@

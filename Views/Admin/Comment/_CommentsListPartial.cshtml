@@ -1,0 +1,50 @@
+﻿@using System.Text.RegularExpressions
+@model xyngr.Models.CommentListingViewModel
+<table id="comment-contacts" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle">
+    <thead>
+        <tr>
+            @*<th>Business</th>
+            <th>Branch</th>*@
+            <th>Comments</th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.CommentList)
+        {
+            <tr>
+                @*<td width="10%">
+                    @item.Business
+                </td>
+                <td width="10%">
+                    @item.Branch
+                </td>*@
+                <td width="70%">
+                    @{
+                        string myContent = Regex.Replace(item.Comments, @"<(.|\n)*?>", string.Empty);
+                        if (myContent.Length > 100)
+                        {
+                            @myContent.Substring(0, 100)
+                        }
+                        else
+                        {
+                            @myContent
+                        }
+                    }
+                </td>
+                <td width="10%" class="text-center">
+                    @Html.ActionLink("Edit", "Edit", "Comment", new { id = item.CommentID }, null)
+                    | @Html.ActionLink("Delete", "Delete", "Comment", new { id = item.CommentID, buID = item.BusinessID, bid = item.BranchID }, new { onclick = "return DeleteAlert();" })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+<script src="~/Scripts/Admin/Comment/CommentList.js"></script>
+<script type="text/javascript">
+    function DeleteAlert() {
+        return confirm("Are you sure you want to delete record?");
+    }
+</script>

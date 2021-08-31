@@ -1,0 +1,80 @@
+﻿@model IEnumerable<xyngr.Models.FacilitiesViewModel>
+@Styles.Render("~/Content/GridCSS")
+
+<section class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-head">
+                <div class="card-header">
+                    <h4 class="card-title">All Facilities</h4>
+                    <div class="messageDiv">
+                        <label>@ViewBag.Message</label>
+                    </div>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <button class="btn btn-primary btn-sm" onclick="javascript:window.location.href='/Admin/Facilities/Create'"><i class="ft-plus white"></i>Add Facility</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="facilities-contacts" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle">
+                            <thead>
+                                <tr>
+                                    <th>Parent Category</th>
+                                    <th>Category</th>
+                                    <th>Facility</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td width="20%">
+                                            @item.ParentCategory
+                                        </td>
+                                        <td width="20%">
+                                            @item.Category
+                                        </td>
+                                        <td width="30%">
+                                            @item.Facility
+                                        </td>
+                                        <td width="10%">
+                                            @if (item.Status)
+                                            {
+                                                <span class="active">Activate</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="danger">Inactivate</span>
+                                            }
+                                        </td>
+                                        <td width="10%">
+                                            @Html.ActionLink("Edit", "Edit", "Facilities", new { id = item.FacilityID }, null)
+                                            | @Html.ActionLink("Delete", "Delete", "Facilities", new { id = item.FacilityID }, new { onclick = "return DeleteAlert();" })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@Scripts.Render("~/bundles/GridJS")
+
+<script src="~/Scripts/Admin/Facilities/FacilitiesList.js"></script>
+<script type="text/javascript">
+    function DeleteAlert() {
+        return confirm("Are you sure you want to delete record?");
+    }
+</script>

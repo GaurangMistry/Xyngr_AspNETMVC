@@ -1,0 +1,392 @@
+﻿@model xyngr.Models.HomeViewModel
+@{
+    ViewBag.Title = "Food, Fashion and Entertainment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section header {
+    @if (Model != null)
+    {
+        if (!Model.GeneralSetting.MetaAuthorContent.Equals(string.Empty))
+        {
+            <meta name="Author" content="@Model.GeneralSetting.MetaAuthorContent" />
+        }
+        if (!Model.GeneralSetting.MetaDescContent.Equals(string.Empty))
+        {
+            <meta name="Description" content="@Model.GeneralSetting.MetaDescContent" />
+        }
+        if (!Model.GeneralSetting.MetaKeyWordContent.Equals(string.Empty))
+        {
+            <meta name="Keywords" content="@Model.GeneralSetting.MetaKeyWordContent" />
+        }
+    }
+
+    @*// Open Graph*@
+    <meta content="@Model.Banners.FirstOrDefault().ImageURL" property="og:image" />
+    <meta content="Website" property="og:type" />
+    <meta content="www.xyngr.com" property="og:site_name" />
+    <meta content="Xyngr.com" property="og:title" />
+    <meta content="Xyngr.com - food-fashion-entertainment" property="og:description" />
+    <meta content="@Request.Url" property="og:url" />
+
+    @*// Twitter*@
+    <meta name='twitter:card' content="Destination" />
+    <meta name='twitter:site' content="www.xyngr.com" />
+    <meta name='twitter:title' content="Xyngr.com" />
+    <meta name='twitter:description' content="Xyngr.com - food-fashion-entertainment" />
+    <meta name='twitter:image' content="@Model.Banners.FirstOrDefault().ImageURL" />
+
+    @*// Canonical*@
+    <link href="@Request.Url" rel="canonical" />
+}
+
+<!--BANNER SECTION-->
+<section>
+    <div>
+        <div>
+            <div>
+                <div class="slider fullscreen">
+                    <ul class="slides">
+                        @foreach (var item in Model.Banners)
+                        {
+                            <li>
+                                <img src="@item.ImageURL" alt="@item.Title">
+                                <!-- random image -->
+                                <div class="caption center-align slid-cap">
+                                    <h5 class="light grey-text text-lighten-3">
+                                        @if (item.Rating > 0)
+                                        {
+                                            <span class="dir-rat-star ho-hot-rat-star">
+                                                @if (item.Rating == 1)
+                                                {
+                                                    <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                                }
+                                                else if (item.Rating == 2)
+                                                {
+                                                    <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                                }
+                                                else if (item.Rating == 3)
+                                                {
+                                                    <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                                }
+                                                else if (item.Rating == 4)
+                                                {
+                                                    <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                                }
+                                                else if (item.Rating == 5)
+                                                {
+                                                    <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i>
+                                                }
+                                            </span>
+                                        }
+                                    </h5>
+                                    <h2 class="banner-header">@item.Title</h2>
+                                    <p>@item.Comment</p>
+                                    @if (item.BranchID > 0)
+                                    {
+                                        <a href="/detail/@Xyngr.helper.CommonLogic.RemoveSpecialCharacter(item.Address1)-@item.BranchID" class="waves-effect waves-light">View More</a>
+                                    }
+
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--END HEADER SECTION-->
+<h1 class="hidden">Xyngr</h1>
+<h2 class="hidden">Feed Fashion and entertainment</h2>
+
+<!--Top 3 Branch SECTION-->
+<section>
+    <div class="rows pad-bot-redu tb-space hom2-ban-pack">
+        <div class="container">
+            <div>
+                <!-- TOUR PLACE 1 -->
+
+                @foreach (var item in Model.NewBranches.Take(3))
+                {
+                    <div class="col-md-4 col-sm-6 col-xs-12 b_packages wow fadeInUp" data-wow-duration="0.5s">
+                        <!-- OFFER BRAND -->
+                        @*<div class="band"> <img src="../../images/band.png" alt=""> </div>*@
+                        <!-- IMAGE -->
+                        <div class="v_place_img"> <a href="/detail/@Xyngr.helper.CommonLogic.RemoveSpecialCharacter(item.Address1)-@item.BranchID"><img src="@item.ImageURL" alt="@item.Address1" title="@item.Address1"></a> </div>
+                        <!-- TOUR TITLE & ICONS -->
+                        <div class="b_pack rows">
+                            <!-- TOUR TITLE -->
+                            <div class="col-md-8 col-sm-8">
+                                <h4><a href="/detail/@Xyngr.helper.CommonLogic.RemoveSpecialCharacter(item.Address1)-@item.BranchID">@item.Address1 (@item.ParentCategory - @item.Category)</a></h4>
+                            </div>
+                            <!-- TOUR ICONS -->
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--====== Featured Destination ==========-->
+<section>
+    <div class="rows tb-space pad-top-o pad-bot-redu">
+        <div class="container">
+            <!-- TITLE & DESCRIPTION -->
+            <div class="spe-title">
+                <div class="home-headers">Featured <span>Destination </span> </div>
+                <div class="title-line">
+                    <div class="tl-1"></div>
+                    <div class="tl-2"></div>
+                    <div class="tl-3"></div>
+                </div>
+                <p>Featured destination for you where you would like to go and enjoy</p>
+            </div>
+            <!-- HOTEL GRID -->
+            <div class="to-ho-hotel">
+                <!-- HOTEL GRID -->
+                @foreach (var item in Model.FeaturedBranches)
+                {
+                    <div class="col-md-4">
+                        <div class="to-ho-hotel-con">
+                            <div class="to-ho-hotel-con-1">
+                                <div class="hot-page2-hli-3"></div>
+                                @if (!item.SalePeriod.Equals(string.Empty))
+                                {
+                                    <div class="hom-hot-av-tic">
+                                        @item.SalePeriod
+                                    </div>
+                                }
+                                <img src="@item.ImageURL" alt="@item.Address1" />
+                            </div>
+
+                            <div class="to-ho-hotel-con-23">
+                                <div class="to-ho-hotel-con-2"> <a href="/detail/@Xyngr.helper.CommonLogic.RemoveSpecialCharacter(item.Address1)-@item.BranchID"><h4>@item.Address1 (@item.ParentCategory - @item.Category)</h4></a> </div>
+                                <div class="to-ho-hotel-con-3">
+                                    <ul>
+                                        <li>
+                                            @*City: @item.City, @item.State, @item.Country*@
+                                            Venue: @item.BusinessName
+                                            <div class="dir-rat-star ho-hot-rat-star">
+                                                Rating:
+                                                @if (item.Rating == 1)
+                                                {
+                                                    <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                                }
+                                                else if (item.Rating == 2)
+                                                {
+                                                    <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                                }
+                                                else if (item.Rating == 3)
+                                                {
+                                                    <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                                }
+                                                else if (item.Rating == 4)
+                                                {
+                                                    <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                                }
+                                                else if (item.Rating == 5)
+                                                {
+                                                    <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i>
+                                                }
+                                            </div>
+                                        </li>
+                                        <li><span class="ho-hot-pri-dis"></span><span class="ho-hot-pri"></span> </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+<!--====== Popular Destination ==========-->
+<section>
+    <div class="rows pad-bot-redu">
+        @*tb-space*@
+        <div class="container">
+            <!-- TITLE & DESCRIPTION -->
+            <div class="spe-title">
+                <div class="home-headers">Popular <span>Destination</span> </div>
+                <div class="title-line">
+                    <div class="tl-1"></div>
+                    <div class="tl-2"></div>
+                    <div class="tl-3"></div>
+                </div>
+                <p>Most Popular destination for you where you would like to go and enjoy</p>
+            </div>
+            <!-- CITY -->
+
+            @{
+                int i = 0;
+            }
+
+            @foreach (var item in Model.PopularBranches)
+            {
+                if (i == 0)
+                {
+                    <div class="col-md-6">
+                        <a href="/detail/@Xyngr.helper.CommonLogic.RemoveSpecialCharacter(item.Address1)-@item.BranchID">
+                            <div class="tour-mig-like-com">
+                                <div class="tour-mig-lc-img"> <img src="@item.ImageURL" alt="@item.Address1" width="800" /> </div>
+                                <div class="tour-mig-lc-con">
+                                    <h5>@item.Address1</h5>
+                                    <p>
+                                        <span class="dir-rat-star ho-hot-rat-star">
+                                            @if (item.Rating == 1)
+                                            {
+                                                <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                            }
+                                            else if (item.Rating == 2)
+                                            {
+                                                <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                            }
+                                            else if (item.Rating == 3)
+                                            {
+                                                <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                            }
+                                            else if (item.Rating == 4)
+                                            {
+                                                <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                            }
+                                            else if (item.Rating == 5)
+                                            {
+                                                <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i>
+                                            }
+                                        </span>
+
+                                        @item.ParentCategory
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3">
+                        <a href="/detail/@Xyngr.helper.CommonLogic.RemoveSpecialCharacter(item.Address1)-@item.BranchID">
+                            <div class="tour-mig-like-com">
+                                <div class="tour-mig-lc-img"> <img src="@item.ImageURL" alt="@item.Address1" /> </div>
+                                <div class="tour-mig-lc-con tour-mig-lc-con2">
+                                    <h5>@item.Address1</h5>
+                                    <p>@item.ParentCategory</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+                i += 1;
+            }
+
+        </div>
+    </div>
+</section>
+
+
+
+<!--====== New Destination ==========-->
+<section>
+    <div class="rows tb-space pad-top-o pad-bot-redu">
+        <div class="container">
+            <!-- TITLE & DESCRIPTION -->
+            <div class="spe-title">
+                <div class="home-headers">New <span>Destination </span> </div>
+                <div class="title-line">
+                    <div class="tl-1"></div>
+                    <div class="tl-2"></div>
+                    <div class="tl-3"></div>
+                </div>
+                <p>New destination for you where you would like to go and enjoy</p>
+            </div>
+            <!-- HOTEL GRID -->
+            <div class="to-ho-hotel">
+                <!-- HOTEL GRID -->
+                @foreach (var item in Model.NewBranches.Skip(3))
+                {
+                    <div class="col-md-4">
+                        <div class="to-ho-hotel-con">
+                            <div class="to-ho-hotel-con-1">
+                                <div class="hot-page2-hli-3"></div>
+                                @if (!item.SalePeriod.Equals(string.Empty))
+                                {
+                                    <div class="hom-hot-av-tic">
+                                        @item.SalePeriod
+                                    </div>
+                                }
+                                <img src="@item.ImageURL" alt="@item.Address1" />
+                            </div>
+
+                            <div class="to-ho-hotel-con-23">
+                                <div class="to-ho-hotel-con-2"> <a href="/detail/@Xyngr.helper.CommonLogic.RemoveSpecialCharacter(item.Address1)-@item.BranchID"><h4>@item.Address1 (@item.ParentCategory - @item.Category)</h4></a> </div>
+                                <div class="to-ho-hotel-con-3">
+                                    <ul>
+                                        <li>
+                                            @*City: @item.City, @item.State, @item.Country*@
+                                            Venue: @item.BusinessName
+                                            <div class="dir-rat-star ho-hot-rat-star">
+                                                Rating:
+                                                @if (item.Rating == 1)
+                                                {
+                                                    <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                                }
+                                                else if (item.Rating == 2)
+                                                {
+                                                    <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                                }
+                                                else if (item.Rating == 3)
+                                                {
+                                                    <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                                }
+                                                else if (item.Rating == 4)
+                                                {
+                                                    <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i>
+                                                }
+                                                else if (item.Rating == 5)
+                                                {
+                                                    <i class='fa fa-star' aria-hidden='true'></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i>
+                                                }
+                                            </div>
+                                        </li>
+                                        <li><span class="ho-hot-pri-dis"></span><span class="ho-hot-pri"></span> </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+<!--====== SECTION: FREE CONSULTANT ==========-->
+@*<section class="hidden">
+        <div class="foot-mob-sec tb-space">
+            <div class="rows container">
+                <!-- FAMILY IMAGE(YOU CAN USE ANY PNG IMAGE) -->
+                <div class="col-md-6 col-sm-6 col-xs-12 family"> <img src="../../images/mobile.png" alt="" /> </div>
+                <!-- REQUEST A QUOTE -->
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <!-- THANK YOU MESSAGE -->
+                    <div class="foot-mob-app">
+                        <h2>Have you tried our mobile app?</h2>
+                        <p>World's leading tour and travels Booking website,Over 30,000 packages worldwide. Book travel packages and enjoy your holidays with distinctive experience</p>
+                        <ul>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> Easy Hotel Booking</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> Tour and Travel Packages</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> Package Reviews and Ratings</li>
+                            <li><i class="fa fa-check" aria-hidden="true"></i> Manage your Bookings, Enquiry and Reviews</li>
+                        </ul>
+                        <a href="#"><img src="../../images/android.png" alt=""> </a>
+                        <a href="#"><img src="../../images/apple.png" alt=""> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>*@

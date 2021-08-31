@@ -1,0 +1,87 @@
+﻿@model xyngr.Models.BranchListingViewModel
+@Styles.Render("~/Content/GridCSS")
+<style></style>
+<section class="row">
+    <div class="col-12">
+        <div class="card" id="divcard">
+            <div class="card-head">
+                <div class="card-header">
+                    <h4 class="card-title">All Destination</h4>
+                    <div class="messageDiv">
+                        <label>@ViewBag.Message</label>
+                    </div>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <button class="btn btn-primary btn-sm" onclick="javascript:window.location.href='/Admin/Branch/Create?buID='+ $('#dllBusiness').val() "><i class="ft-plus white"></i> Add Destination</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="Business">Venue</label>
+                                @{
+                                    List<SelectListItem> listBusinessList = new List<SelectListItem>();
+                                    var isselected = false;
+                                    foreach (var m in Model.BusinessList)
+                                    {
+                                        if (m.BusinessID == Model.BusinessID)
+                                        {
+                                            isselected = true;
+                                        }
+                                        else
+                                        {
+                                            isselected = false;
+                                        }
+
+                                        listBusinessList.Add(new SelectListItem { Text = m.Name, Value = m.BusinessID.ToString(), Selected = isselected });
+                                    }
+                                }
+                                @Html.DropDownList("dllBusiness", listBusinessList, null, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-9"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="table-responsive"  id="tblBranch">
+                        @Html.Partial("~/Views/Admin/Branch/_BranchListPartial.cshtml")
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@Scripts.Render("~/bundles/GridJS")
+
+<script src="~/Scripts/Admin/Branch/BranchList.js"></script>
+<script type="text/javascript">
+    function DeleteAlert() {
+        return confirm("Are you sure you want to delete record?");
+    }
+
+    $(document).ready(function () {
+        GetBranchByBusiness($("#dllBusiness").val());
+
+        $("#dllBusiness").change(function () {
+            ShowLoading("divcard");
+            GetBranchByBusiness(this.value);
+        });
+    });
+
+    function GetBranchByBusiness(id) {
+        if (id == null)
+            id = 0;
+
+        $.ajax({
+            url: '/Admin/Branch/GetBranchViewByBusinessID/' + id,
+            type: "GET",
+            success: function (data) {
+                $("#tblBranch").html(data);
+            }
+        });
+    }
+
+</script>
